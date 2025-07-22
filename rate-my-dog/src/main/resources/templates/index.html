@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rate My Dog</title>
+</head>
+<body>
+    <h1>Rate My Dog</h1>
+
+    <div th:each="dog : ${dogs}">
+        <h2 th:text="${dog.name}">Bako</h2>
+        <img th:src="@{${dog.imageUrl}}" width="300" />
+        <hr/>
+    </div>
+</body>
+</html>
