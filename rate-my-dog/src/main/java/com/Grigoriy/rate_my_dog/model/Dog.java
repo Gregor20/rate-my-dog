@@ -1,38 +1,11 @@
-
 package com.Grigoriy.rate_my_dog.model;
 
-public class Dog {
-	private int id;
-	private String name;
-	private String imageUrl;
+public class Dog extends Animal {
 
-	public Dog(int id, String name, String imageUrl) {
-		this.id = id;
-		this.name = name;
-		this.imageUrl = imageUrl;
+	public Dog(int id, String name, String image) {
+		super(id, name, image);
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+	// Puedes agregar métodos específicos de la clase Dog aquí si es necesario
 }
+// Esta clase Dog extiende la clase Animal y hereda sus propiedades y métodos.
