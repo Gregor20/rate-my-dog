@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'Detalle de ' + ${animal.name}">Detalle Animal</title>
+    <link rel="stylesheet" href="/css/animal-detail.css" />
+</head>
+<body>
+    <h1 th:text="${animal.name}">Nombre Animal</h1>
+    <img th:src="${animal.image}" th:alt="${animal.name}" style="max-width: 300px; border-radius: 8px;" />
+
+    <!-- Checkbox oculto que controla el modal -->
+    <input type="checkbox" id="modalToggle" style="display: none;" />
+
+    <!-- Botón para abrir el modal -->
+    <label for="modalToggle" style="cursor:pointer; text-decoration: underline; color: blue;">
+        Dejar comentario y valoración
+    </label>
+
+    <!-- Modal: debe ir JUSTO después del checkbox -->
+    <div class="modal">
+        <div class="modal-content">
+            <!-- Botón cerrar -->
+            <label for="modalToggle" class="close-btn">&times;</label>
+
+            <!-- Imagen grande en el modal -->
+            <img th:src="${animal.image}" th:alt="${animal.name}" />
+
+            <!-- Formulario -->
+            <form th:action="@{/animal/{id}/review(id=${animal.id})}" method="post" th:object="${review}">
+                <label for="comment">Comentario:</label><br />
+                <textarea id="comment" th:field="*{comment}" rows="4" cols="50" required></textarea><br /><br />
+
+                <label>Valoración:</label><br />
+                <div class="stars">
+                    <input type="radio" th:field="*{rating}" id="star5" value="5" required />
+                    <label for="star5">&#9733;</label>
+                    <input type="radio" th:field="*{rating}" id="star4" value="4" />
+                    <label for="star4">&#9733;</label>
+                    <input type="radio" th:field="*{rating}" id="star3" value="3" />
+                    <label for="star3">&#9733;</label>
+                    <input type="radio" th:field="*{rating}" id="star2" value="2" />
+                    <label for="star2">&#9733;</label>
+                    <input type="radio" th:field="*{rating}" id="star1" value="1" />
+                    <label for="star1">&#9733;</label>
+                </div>
+                <br /><br />
+
+                <button type="submit">Enviar valoración</button>
+            </form>
+        </div>
+    </div>
+
+    <br />
+    <a href="/" style="text-decoration:none;">&larr; Volver a la lista</a>
+</body>
+</html>

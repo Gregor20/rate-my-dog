@@ -1,0 +1,62 @@
+/* animal-detail.css */
+
+/* Modal puro CSS */
+#modalToggle {
+    display: none;
+}
+.modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+#modalToggle:checked + .modal {
+    display: flex;
+}
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+.modal-content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Estrellas estilo visual */
+.stars {
+    direction: rtl;
+    display: inline-flex;
+    gap: 5px;
+    font-size: 2rem;
+    user-select: none;
+}
+.stars input[type="radio"] {
+    display: none;
+}
+.stars label {
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.stars input[type="radio"]:checked ~ label,
+.stars label:hover,
+.stars label:hover ~ label {
+    color: gold;
+}
