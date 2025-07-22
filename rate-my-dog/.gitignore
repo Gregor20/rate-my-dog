@@ -31,3 +31,19 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Maven
+target/
+
+# Logs
+*.log
+
+# Archivos compilados
+*.class
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Propiedades (si tienen claves)
+application.properties
