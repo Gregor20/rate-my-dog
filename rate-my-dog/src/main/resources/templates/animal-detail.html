@@ -1,57 +1,81 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title th:text="'Detalle de ' + ${animal.name}">Detalle Animal</title>
-    <link rel="stylesheet" href="/css/animal-detail.css" />
+    <meta charset="UTF-8">
+    <title th:text="${animal.name}">Detalle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/animal-detail.css">
 </head>
-<body>
-    <h1 th:text="${animal.name}">Nombre Animal</h1>
-    <img th:src="${animal.image}" th:alt="${animal.name}" style="max-width: 300px; border-radius: 8px;" />
+<body class="bg-light">
+    <div class="container py-5">
+        <!-- Botón de volver -->
+        <a href="/" class="btn btn-outline-secondary mb-4">← Volver</a>
 
-    <!-- Checkbox oculto que controla el modal -->
-    <input type="checkbox" id="modalToggle" style="display: none;" />
-
-    <!-- Botón para abrir el modal -->
-    <label for="modalToggle" style="cursor:pointer; text-decoration: underline; color: blue;">
-        Dejar comentario y valoración
-    </label>
-
-    <!-- Modal: debe ir JUSTO después del checkbox -->
-    <div class="modal">
-        <div class="modal-content">
-            <!-- Botón cerrar -->
-            <label for="modalToggle" class="close-btn">&times;</label>
-
-            <!-- Imagen grande en el modal -->
-            <img th:src="${animal.image}" th:alt="${animal.name}" />
-
-            <!-- Formulario -->
-            <form th:action="@{/animal/{id}/review(id=${animal.id})}" method="post" th:object="${review}">
-                <label for="comment">Comentario:</label><br />
-                <textarea id="comment" th:field="*{comment}" rows="4" cols="50" required></textarea><br /><br />
-
-                <label>Valoración:</label><br />
-                <div class="stars">
-                    <input type="radio" th:field="*{rating}" id="star5" value="5" required />
-                    <label for="star5">&#9733;</label>
-                    <input type="radio" th:field="*{rating}" id="star4" value="4" />
-                    <label for="star4">&#9733;</label>
-                    <input type="radio" th:field="*{rating}" id="star3" value="3" />
-                    <label for="star3">&#9733;</label>
-                    <input type="radio" th:field="*{rating}" id="star2" value="2" />
-                    <label for="star2">&#9733;</label>
-                    <input type="radio" th:field="*{rating}" id="star1" value="1" />
-                    <label for="star1">&#9733;</label>
+        <!-- Contenedor principal centrado -->
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <!-- Imagen centrada -->
+                <div class="text-center mb-4">
+                    <img th:src="@{'/' + ${animal.image}}" 
+                         th:alt="${animal.name}" 
+                         class="img-fluid rounded shadow"
+                         style="max-height: 400px; width: auto;">
                 </div>
-                <br /><br />
 
-                <button type="submit">Enviar valoración</button>
-            </form>
+                <!-- Nombre del animal -->
+                <h2 class="text-center mb-4" th:text="${animal.name}"></h2>
+
+                <!-- Formulario de valoración -->
+                <div class="card shadow-sm p-4">
+                    <form th:action="@{/animal/{id}/review(id=${animal.id})}" method="post" th:object="${review}">
+                        <!-- Estrellas de valoración centradas -->
+                        <div class="text-center mb-3">
+                            <div class="rating-stars d-inline-block">
+                                <input type="radio" id="star5" th:field="*{rating}" value="5" required>
+                                <label for="star5">★</label>
+                                <input type="radio" id="star4" th:field="*{rating}" value="4">
+                                <label for="star4">★</label>
+                                <input type="radio" id="star3" th:field="*{rating}" value="3">
+                                <label for="star3">★</label>
+                                <input type="radio" id="star2" th:field="*{rating}" value="2">
+                                <label for="star2">★</label>
+                                <input type="radio" id="star1" th:field="*{rating}" value="1">
+                                <label for="star1">★</label>
+                            </div>
+                        </div>
+
+                        <!-- Comentario -->
+                        <div class="mb-3">
+                            <textarea th:field="*{comment}" 
+                                      class="form-control" 
+                                      rows="3" 
+                                      placeholder="Escribe tu comentario..."></textarea>
+                        </div>
+
+                        <!-- Botón de enviar -->
+                        <button type="submit" class="btn btn-primary w-100">Enviar valoración</button>
+                    </form>
+                </div>
+
+                <!-- Reviews existentes -->
+                <div th:if="${not #lists.isEmpty(animal.reviews)}" class="mt-5">
+                    <h4 class="mb-3 text-center">Valoraciones:</h4>
+                    <div th:each="review : ${animal.reviews}" class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <div class="stars text-center mb-2">
+                                <span th:each="i : ${#numbers.sequence(1, 5)}">
+                                    <span th:if="${i <= review.rating}" class="text-warning">★</span>
+                                    <span th:else class="text-muted">★</span>
+                                </span>
+                            </div>
+                            <p class="mb-1" th:text="${review.comment}"></p>
+                            <small class="text-muted" 
+                                   th:text="${#temporals.format(review.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <br />
-    <a href="/" style="text-decoration:none;">&larr; Volver a la lista</a>
 </body>
 </html>

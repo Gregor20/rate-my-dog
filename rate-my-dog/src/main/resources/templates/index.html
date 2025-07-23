@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Rate My Dog</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-
-    <h1>🐶 Rate My Dog</h1>
-
-    <div class="gallery">
-    	<div th:each="animal : ${animals}" class="card">
-            <a th:href="@{/animal/{id}(id=${animal.id})}">
-                <img th:src="${animal.image}" th:alt="${animal.name}" />
-                <div class="animal-name" th:text="${animal.name}">Nombre</div>
-            </a>
-    	</div>
-	</div>
-
-
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="text-center mb-5" style="font-family: 'Roboto', sans-serif; color: #333;">Rate My Dog</h1>
+        
+        <!-- Grid de animales -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div th:each="animal : ${animals}" class="col">
+                <a th:href="@{/animal/{id}(id=${animal.id})}" class="text-decoration-none">
+                    <div class="card animal-card h-100">
+                        <img th:src="${animal.image}" th:alt="${animal.name}" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h5 class="card-title" style="color: #000; font-weight: 500;" th:text="${animal.name}"></h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
-
-
-
-<!--
-<div th:each="animal : ${animals}" class="card">
-        	<img th:src="${animal.image}" th:alt="${animal.name}" class="animal-img" />
-        	<div class="animal-name" th:text="${animal.name}">Nombre del animal</div>
-    	</div>
- -->
